@@ -1,8 +1,7 @@
 let cantidad_de_alumnos = parseInt(prompt("Cantidad de alumnos a promediar"));
+let alumnos = [];
 let alumno;
-let nota1;
-let nota2;
-let notas;
+let notas = [];
 
 if(typeof (cantidad_de_alumnos) !== "number"){
     console.log("Pone un numero");
@@ -10,19 +9,20 @@ if(typeof (cantidad_de_alumnos) !== "number"){
 else {
     for (let i = 0 ; i < cantidad_de_alumnos; i++){
         alumno = prompt("Nombre del alumno");
-        nota1 = obtenerNota(1);
+        alumnos.push(alumno)
+
+        notas.push(obtenerNota(1));
+        notas.push(obtenerNota(2));
        
-        nota2 = obtenerNota(2);
-       
-        notas = promedio(nota1, nota2);
+        let notaFinal = promedio(notas);
         
         if (aprobado(notas)){
-            console.log("La nota de", alumno , "es", notas);
+            console.log("La nota de", alumnos[i] , "es", notaFinal);
             console.log("Usted esta aprobado");
         }
     
         else{
-            console.log("La nota de ", alumno , "es", notas);
+            console.log("La nota de ", alumnos[i] , "es", notaFinal);
             console.log("Usted esta desaprobado");
         }
     
@@ -48,13 +48,15 @@ function obtenerNota(examenNum){
         return nota;
 }
 
-function promedio(nota1, nota2){
+function promedio(notas){
     let suma = 0;
-    suma = parseInt(nota1) + parseInt(nota2);
+    for (let i = 0; i < notas.length; i++){
+        suma = suma + parseInt(notas[i]);
+    }
     
-        suma = suma / 2;
+    suma = suma / notas.length;
         
-        return suma;
+    return suma;
 }
 
 function aprobado(nota){
