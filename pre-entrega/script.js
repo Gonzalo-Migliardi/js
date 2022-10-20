@@ -1,28 +1,45 @@
 let cantidad_de_alumnos = parseInt(prompt("Cantidad de alumnos a promediar"));
-let alumnos = [];
-let alumno;
-let notas = [];
+let nombreAlumno;
+
+class Alumno{
+    constructor(nombre){
+        this.name = nombre;
+        this.notas = [];
+    }
+    promedio(){
+        let suma = 0;
+        this.notas.forEach(nota => {
+            suma = suma + parseInt(nota);
+        });
+        
+        suma = suma / this.notas.length;
+            
+        return suma;
+    }
+}
+
 
 if(typeof (cantidad_de_alumnos) !== "number"){
     console.log("Pone un numero");
 }
 else {
     for (let i = 0 ; i < cantidad_de_alumnos; i++){
-        alumno = prompt("Nombre del alumno");
-        alumnos.push(alumno)
-
-        notas.push(obtenerNota(1));
-        notas.push(obtenerNota(2));
-       
-        let notaFinal = promedio(notas);
+        nombreAlumno = prompt("Nombre del alumno");
+        let alumno = new Alumno(nombreAlumno);
         
-        if (aprobado(notas)){
-            console.log("La nota de", alumnos[i] , "es", notaFinal);
+        alumno.notas.push(obtenerNota(1));
+        alumno.notas.push(obtenerNota(2));
+       
+       
+        let notaFinal = alumno.promedio();
+        
+        if (aprobado(notaFinal)){
+            console.log("La nota de", alumno.name , "es", notaFinal);
             console.log("Usted esta aprobado");
         }
     
         else{
-            console.log("La nota de ", alumnos[i] , "es", notaFinal);
+            console.log("La nota de ", alumno.name , "es", notaFinal);
             console.log("Usted esta desaprobado");
         }
     
@@ -48,16 +65,7 @@ function obtenerNota(examenNum){
         return nota;
 }
 
-function promedio(notas){
-    let suma = 0;
-    for (let i = 0; i < notas.length; i++){
-        suma = suma + parseInt(notas[i]);
-    }
-    
-    suma = suma / notas.length;
-        
-    return suma;
-}
+
 
 function aprobado(nota){
     if (nota >= 7){
